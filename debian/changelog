@@ -1,0 +1,6 @@
+wallbox (0.2-1.0) karmic; urgency=low
+
+  * Initial release.
+  * Using upstream version v0.2
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Thu, 21 Jan 2010 03:40:59 +0800

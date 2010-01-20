@@ -1,0 +1,19 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01setup_py.dpatch by  <ronmi@ronmi-nb>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wallbox~/setup.py wallbox/setup.py
+--- wallbox~/setup.py	2010-01-21 13:22:43.000000000 +0800
++++ wallbox/setup.py	2010-01-21 13:23:08.975207384 +0800
+@@ -4,7 +4,7 @@
+ 
+ setup (
+     name = "wallbox",
+-    version = "0.1",
++    version = "0.2",
+     packages = find_packages ('src'),
+     package_dir = {'':'src'},
+ 

@@ -1,0 +1,20 @@
+Source: wallbox
+Section: gnome
+Priority: optional
+Maintainer: Ronmi Ren <ronmi@rmi.twbbs.org>
+Build-Depends: dpatch, debhelper (>= 5),
+               python-setuptools, python-support
+Standards-Version: 3.8.1
+Homepage: http://wiki.github.com/yurenju/wallbox/
+
+Package: wallbox
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-support,
+         python-facebook (>= 0.svn20090724-1.1),
+         python-gtk2, python-dbus, python-gobject
+Description: Wallbox is a Facebook notification for Linux
+ Wallbox is a Facebook notification for Linux. features include:
+  * hide in system tray, just click wallbox icon if you want to read facebook 
+    notification.
+  * if notification is a comment of status or link, wallbox will show all 
+    comments reply to this status/link.
