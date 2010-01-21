@@ -1,0 +1,2 @@
+?package(wallbox):needs="X11" section="Applications/Network"\
+  title="wallbox" command="/usr/bin/wallbox"
