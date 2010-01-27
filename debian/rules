@@ -40,7 +40,6 @@ install: build
 	dh_installdirs
 	python setup.py install \
 		--root=$(CURDIR)/debian/wallbox \
-		--install-layout=deb \
 		--install-scripts=usr/bin
 	dh_install src/wallbox/data/applications/*.desktop usr/share/applications
 
