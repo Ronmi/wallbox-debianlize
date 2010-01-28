@@ -19,10 +19,12 @@ import defs
 import logging
 import utils
 import pickle
+import sys
 
 __author__ = 'Yuren Ju <yurenju@gmail.com>'
 
 GET_ICON_TIMEOUT = 3
+QUERY_TIMEOUT = 5
 
 gtk.gdk.threads_init()
 logging.basicConfig (level=defs.log_level)
@@ -45,6 +47,13 @@ class NoUpdateError(Exception):
         self.value = value
     def __str__ (self):
         return repr (self.value)
+
+class RefreshError(Exception):
+    def __init__ (self, value):
+        self.value = value
+    def __str__ (self):
+        return repr (self.value)
+
 
 class RefreshProcess (threading.Thread):
     def __init__ (self, notification_num, fb, uid, user_icons_dir, app_icons_dir, user_ids, last_nid):
@@ -104,14 +113,19 @@ class RefreshProcess (threading.Thread):
             logging.debug (nids_log)
 
     def _query (self, query_str):
+	logging.debug ("_query: %s" % query_str)
+        default_timeout = socket.getdefaulttimeout ()
+        socket.setdefaulttimeout (QUERY_TIMEOUT)
         for i in range (3):
             try:
                 result = self.fb.fql.query (query_str)
                 if result != None:
+                    socket.setdefaulttimeout (default_timeout)
                     return result
             except:
                 logging.debug ("URLError, Sleep 3 sec")
                 time.sleep (3)
+        socket.setdefaulttimeout (default_timeout)
         return None
             
     def get_remote_current_status (self):
@@ -120,7 +134,10 @@ class RefreshProcess (threading.Thread):
                 "source FROM status WHERE uid='%s' LIMIT 1" % self.uid
         status = self._query (qstr)
 
-        self.current_status = status[0]
+        if status != None and len (status) > 0:
+            self.current_status = status[0]
+        else:
+            self.current_status = None
         self.refresh_status["current_status"] = True
 
     def _filter_none (self, items):
@@ -186,7 +203,6 @@ class RefreshProcess (threading.Thread):
         substr = " OR ".join (subquery)
         qstr = "SELECT source_id, post_id, message, permalink FROM stream " + \
             "WHERE %s" % substr
-        logging.debug ("status query: " + qstr)
         result = self._query (qstr)
 
         if len (result) < len (subquery):
@@ -306,8 +322,7 @@ class RefreshProcess (threading.Thread):
 
         ids_str = ", ".join (self.app_ids)
         qstr = "SELECT icon_url, app_id FROM application WHERE app_id IN (%s)" % ids_str
-        logging.debug ("qstr: %s" % qstr)
-        apps = self.fb.fql.query (qstr)
+        apps = self._query (qstr)
 
         default_timeout = socket.getdefaulttimeout ()
         socket.setdefaulttimeout (GET_ICON_TIMEOUT)
@@ -337,9 +352,9 @@ class RefreshProcess (threading.Thread):
         qstr = "SELECT notification_id FROM notification " + \
                 "WHERE recipient_id = %d LIMIT 1" % int (self.uid)
         result = self._query (qstr)
-        logging.debug ("get last nid: %d" % int (result[0]['notification_id']))
-        logging.debug ("orignal nid: %d" % int (self.last_nid))
-        if len (result) > 0:
+        if result != None and len (result) > 0:
+            logging.debug ("get last nid: %d" % int (result[0]['notification_id']))
+            logging.debug ("orignal nid: %d" % int (self.last_nid))
             return result[0]['notification_id']
         else:
             return 0
@@ -670,6 +685,10 @@ class PostOffice (dbus.service.Object):
     @dbus.service.method ("org.wallbox.PostOfficeInterface", in_signature='', out_signature='s')
     def get_user_icons_dir (self):
         return self.user_icons_dir
+
+    @dbus.service.method ("org.wallbox.PostOfficeInterface", in_signature='', out_signature='')
+    def kill (self):
+        sys.exit (0)
 
     @dbus.service.signal ("org.wallbox.PostOfficeInterface", signature='i')
     def status_changed (self, status):
