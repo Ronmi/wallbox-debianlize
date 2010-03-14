@@ -9,7 +9,6 @@ import comment
 import sys
 import time
 import gobject
-import pkg_resources
 import pango
 import defs
 import logging
@@ -17,6 +16,9 @@ import utils
 import webbrowser
 import os
 import cgi
+import gettext
+
+_ = gettext.gettext
 
 class Notification (gobject.GObject):
 
@@ -25,8 +27,7 @@ class Notification (gobject.GObject):
         gobject.GObject.__init__(self)
         self.builder = gtk.Builder ()
 
-        ui_file = pkg_resources.resource_filename \
-                    (__name__, "data/notification.ui")
+        ui_file =  "%s/notification.ui" % defs.WALLBOX_DATA_DIR
 
         self.builder.add_from_file (ui_file)
         self.builder.connect_signals (self, None)
@@ -122,8 +123,7 @@ class Notification (gobject.GObject):
         if len (user) != 0:
             pic_square.set_from_file (user_icon_path + '/' + user['pic_square_local'])
         else:
-            img_file = pkg_resources.resource_filename \
-                        (__name__, "data/images/q_silhouette.gif")
+            img_file =  "%s/images/q_silhouette.gif" % defs.WALLBOX_DATA_DIR
             pic_square.set_from_file (img_file)
 
     def refresh_current_status (self):
@@ -135,15 +135,15 @@ class Notification (gobject.GObject):
 
     def on_refresh_status_changed (self, status):
         if status == defs.REFRESH_START:
-            self.progressbar_refresh.set_text ("getting current status")
+            self.progressbar_refresh.set_text (_("getting current status"))
         if status == defs.CURRENT_STATUS_COMPLETED:
-            self.progressbar_refresh.set_text ("getting notifications")
+            self.progressbar_refresh.set_text (_("getting notifications"))
             self.refresh_current_status ()
         if status == defs.NOTIFICATION_COMMENTS_COMPLETED:
-            self.progressbar_refresh.set_text ("downloading users icon")
+            self.progressbar_refresh.set_text (_("downloading users icon"))
             self.refresh_notification_comments ()
         if status == defs.USERS_ICON_COMPLETED:
-            self.progressbar_refresh.set_text ("downloading apps icon")
+            self.progressbar_refresh.set_text (_("downloading apps icon"))
             self.refresh_users_icon ()
         if status == defs.APPS_ICON_COMPLETED:
             self.progressbar_refresh.set_text ("")
@@ -153,12 +153,12 @@ class Notification (gobject.GObject):
         link_refresh = self.builder.get_object ("link_refresh")
         if status == 1:
             #refresh
-            link_refresh.set_label ("Refreshing....")
+            link_refresh.set_label (_("Refreshing...."))
             self.progressbar_refresh.show ()
             self.refresh_handler_id = gobject.timeout_add (150, self._refresh_animation)
         else:
             self.view_refresh ()
-            link_refresh.set_label ("Refresh")
+            link_refresh.set_label (_("Refresh"))
             self.progressbar_refresh.hide ()
             gobject.source_remove (self.refresh_handler_id)
             self.refresh_handler_id = None
@@ -203,6 +203,7 @@ class Notification (gobject.GObject):
                 logging.debug ("status: %s" % status['message'])
                 if not self.comments.has_key (status['post_id']):
                     self.comments[status['post_id']] = comment.Comment (status['post_id'])
+                    self.comments[status['post_id']].window.set_transient_for (self.window)
 
                 rect = self.comments[status['post_id']].window.get_allocation ()
                 if candidate_y + rect.height > utils.get_min_monitor_height () - 30 :
@@ -256,8 +257,7 @@ class Notification (gobject.GObject):
         self.column.set_cell_data_func (self.arrow_cell, self.make_arrow)
 
     def _get_empty_image (self):
-        img_file = pkg_resources.resource_filename \
-                    (__name__, "data/images/empty.gif")
+        img_file =  "%s/images/empty.gif" % defs.WALLBOX_DATA_DIR
         return gtk.image_new_from_file (img_file)
 
     def make_icon (self, column, cell, model, iter):
