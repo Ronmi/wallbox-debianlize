@@ -1,0 +1,13 @@
+wallbox for Debian
+------------------
+
+Upstream maintainer (author) is Yuren Ju <yurenju@gmail.com>, and the source
+code is hosted by github at http://github.com/yurenju/wallbox
+
+The packaging is maintained by Ronmi Ren <ronmi@rmi.twbbs.org>, and the source
+code is hosted by github, too, at http://github.com/Ronmi/wallbox-debianlize
+
+You may download newest code of karmic branch to build your own package with
+dpkg-buildpackage or preferred tools.
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Thu, 21 Jan 2010 03:38:56 +0800
