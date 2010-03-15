@@ -18,13 +18,12 @@ configure_flags = --prefix=/usr
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./autogen.sh
-	./configure $(configure_flags)
+	./autogen.sh $(configure_flags)
 	touch configure-stamp
 
 build: build-stamp
 
-build-stamp: configure-stamp  patch-stamp
+build-stamp: patch-stamp configure-stamp
 	dh_testdir
 	$(MAKE)
 	touch $@

@@ -11,8 +11,7 @@ Package: wallbox
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-support,
          python-facebook (>= 0.svn20090724-1.1),
-         python-gtk2, python-dbus, python-gobject,
-         python-setuptools
+         python-gtk2, python-dbus, python-gobject
 Description: Wallbox is a Facebook notification for Linux
  Wallbox is a Facebook notification for Linux. features include:
   * hide in system tray, just click wallbox icon if you want to read facebook 
