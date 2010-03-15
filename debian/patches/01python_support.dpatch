@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01python_support.dpatch by  <ronmi@ronmi-nb>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wallbox~/src/wallbox/defs.py.in wallbox/src/wallbox/defs.py.in
+--- wallbox~/src/wallbox/defs.py.in	2010-03-15 15:11:53.000000000 +0800
++++ wallbox/src/wallbox/defs.py.in	2010-03-15 15:14:10.670829462 +0800
+@@ -18,6 +18,6 @@
+ LIB_DIR = "@LIBDIR@"
+ VERSION = "@VERSION@"
+ PACKAGE = "@PACKAGE@"
+-PYTHONDIR = "@PYEXECDIR@"
++PYTHONDIR = "/usr/share/pyshared/@PACKAGE@"
+ 
+ WALLBOX_DATA_DIR = "%s/%s" % (DATA_DIR, PACKAGE)

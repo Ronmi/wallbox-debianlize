@@ -23,7 +23,7 @@ configure-stamp:
 
 build: build-stamp
 
-build-stamp: configure-stamp  patch-stamp
+build-stamp: patch-stamp configure-stamp
 	dh_testdir
 	$(MAKE)
 	touch $@
