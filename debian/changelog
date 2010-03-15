@@ -1,3 +1,10 @@
+wallbox (0.4-0karmic2) karmic; urgency=low
+
+  * Some modification to fit the usage of python-support package
+  * temporary workround for upstream issue #23
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Mon, 15 Mar 2010 14:53:24 +0800
+
 wallbox (0.4-0karmic1) karmic; urgency=low
 
   [ Yuren Ju ]
