@@ -1,3 +1,10 @@
+wallbox (0.4-0lucid2) lucid; urgency=low
+
+  * fix module path for fitting python-support
+  * temporary workround for upstream issue #23
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Mon, 15 Mar 2010 15:16:06 +0800
+
 wallbox (0.4-0lucid1) lucid; urgency=low
 
   [ Yuren Ju ]
