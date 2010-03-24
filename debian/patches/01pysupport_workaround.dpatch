@@ -1,0 +1,62 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 99pysupport_workaround.dpatch by  <ronmi@ronmi-nb>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wallbox~/configure.ac wallbox/configure.ac
+--- wallbox~/configure.ac	2010-03-24 20:20:43.000000000 +0800
++++ wallbox/configure.ac	2010-03-24 21:43:08.466857612 +0800
+@@ -72,6 +72,9 @@
+ AS_AC_EXPAND(LIBDIR, $libdir)
+ AC_SUBST(LIBDIR)
+ 
++AS_AC_EXPAND(BINDIR, $bindir)
++AC_SUBST(BINDIR)
++
+ icondir=${datadir}/icons/hicolor/32x32/apps
+ AC_SUBST(icondir)
+ 
+diff -urNad wallbox~/src/Makefile.am wallbox/src/Makefile.am
+--- wallbox~/src/Makefile.am	2010-03-24 21:40:43.000000000 +0800
++++ wallbox/src/Makefile.am	2010-03-24 21:42:14.944341134 +0800
+@@ -1,7 +1,7 @@
+ SUBDIRS = wallbox
+ 
+ # primary file (executable python script) placed in /usr/bin
+-bin_SCRIPTS = wallbox-applet
++bin_SCRIPTS = wallbox-applet wallbox-post-office
+ 
+ 
+ # Replace @PKGDATADIR@ in script with path to pkgdatadir post installation:
+diff -urNad wallbox~/src/wallbox/defs.py.in wallbox/src/wallbox/defs.py.in
+--- wallbox~/src/wallbox/defs.py.in	2010-03-24 21:40:43.000000000 +0800
++++ wallbox/src/wallbox/defs.py.in	2010-03-24 21:42:14.944341134 +0800
+@@ -19,5 +19,6 @@
+ VERSION = "@VERSION@"
+ PACKAGE = "@PACKAGE@"
+ PYTHONDIR = "@PYEXECDIR@/wallbox"
++BINDIR = "@BINDIR@"
+ 
+ WALLBOX_DATA_DIR = "%s/%s" % (DATA_DIR, PACKAGE)
+diff -urNad wallbox~/src/wallbox/wallbox.py wallbox/src/wallbox/wallbox.py
+--- wallbox~/src/wallbox/wallbox.py	2010-03-24 21:40:43.000000000 +0800
++++ wallbox/src/wallbox/wallbox.py	2010-03-24 21:42:14.944341134 +0800
+@@ -209,7 +209,7 @@
+     except:
+         logging.info ("execute post_office.py")
+ 
+-    office =  "%s/post_office.py" % defs.PYTHONDIR
++    office =  "%s/wallbox-post-office" % defs.BINDIR
+     Popen (["python %s" % office], shell=True)
+     time.sleep (1)
+         
+diff -urNad wallbox~/src/wallbox-post-office wallbox/src/wallbox-post-office
+--- wallbox~/src/wallbox-post-office	1970-01-01 08:00:00.000000000 +0800
++++ wallbox/src/wallbox-post-office	2010-03-24 21:42:14.944341134 +0800
+@@ -0,0 +1,4 @@
++#!/usr/bin/env python
++from wallbox import post_office
++
++post_office.main()
