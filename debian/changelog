@@ -1,3 +1,35 @@
+wallbox (0.4.1-1) unstable; urgency=low
+
+  [ Yuren Ju ]
+  * enhance window position
+  * fixbug: after setting notification number, can't refresh
+  * fix compiz issue
+  * set always on top
+  * improve window position management
+  * autotoolize
+  * minor fix
+  * add defs.py function
+  * use autotools instead of setuptools
+  * add wallbox-applet execute file and .desktop file
+  * change icons
+  * add zh_TW.po
+  * add messages.po
+  * support i18n
+  * add i18n support to notification
+  * add i18n support
+  * enhance zh_TW translation
+  * modify zh_TW translation
+  * keep Makefile.in empty
+  * fix wizard can't run issue
+  * remove secret.py
+  * merge EXTRA_DIST
+  * install wallbox python script to right path
+
+  [ Ronmi Ren ]
+  * update to 0.4.1 and apply workaround about python-support
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Wed, 24 Mar 2010 22:00:58 +0800
+
 wallbox (0.3-1) unstable; urgency=low
 
   [ Yuren Ju ]
