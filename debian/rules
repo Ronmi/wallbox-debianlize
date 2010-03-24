@@ -13,24 +13,26 @@
 
 include /usr/share/dpatch/dpatch.make
 
+configure_flags = --prefix=/usr 
+
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
+	./autogen.sh $(configure_flags)
 	touch configure-stamp
 
 build: build-stamp
 
-build-stamp: configure-stamp  patch-stamp
+build-stamp: patch-stamp configure-stamp
 	dh_testdir
-	python setup.py build
+	$(MAKE)
 	touch $@
 
 clean: unpatch
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
-	python setup.py clean
-	rm -fr build
+	if [ -f Makefile ]; then $(MAKE) clean ; fi
 	dh_clean 
 
 install: build
@@ -38,10 +40,7 @@ install: build
 	dh_testroot
 	dh_prep  
 	dh_installdirs
-	python setup.py install \
-		--root=$(CURDIR)/debian/wallbox \
-		--install-scripts=usr/bin
-	dh_install src/wallbox/data/applications/*.desktop usr/share/applications
+	$(MAKE) DESTDIR=$(CURDIR)/debian/wallbox install
 
 
 # Build architecture-independent files here.

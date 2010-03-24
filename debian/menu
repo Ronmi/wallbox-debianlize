@@ -1,2 +1,2 @@
 ?package(wallbox):needs="X11" section="Applications/Network"\
-  title="wallbox" command="/usr/bin/wallbox"
+  title="wallbox" command="/usr/bin/wallbox-applet"

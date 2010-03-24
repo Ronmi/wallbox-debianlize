@@ -1,9 +1,9 @@
 Source: wallbox
 Section: gnome
-Priority: optional
+Priority: extra
 Maintainer: Ronmi Ren <ronmi@rmi.twbbs.org>
-Build-Depends: dpatch, debhelper (>= 5),
-               python-setuptools, python-support
+Build-Depends: dpatch, debhelper (>= 5), gnome-common,
+               libglib2.0-dev, python-support
 Standards-Version: 3.8.1
 Homepage: http://wiki.github.com/yurenju/wallbox/
 
