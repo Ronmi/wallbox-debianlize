@@ -1,3 +1,14 @@
+wallbox (0.4.1-0karmic1) karmic; urgency=low
+
+  [ Yuren Ju ]
+  * merge EXTRA_DIST
+  * install wallbox python script to right path
+
+  [ Ronmi Ren ]
+  * workaround for 0.4.1
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Wed, 24 Mar 2010 21:46:51 +0800
+
 wallbox (0.4-0karmic2) karmic; urgency=low
 
   * Some modification to fit the usage of python-support package
