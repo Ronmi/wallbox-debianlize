@@ -1,3 +1,14 @@
+wallbox (0.4.1-0lucid1) lucid; urgency=low
+
+  [ Yuren Ju ]
+  * merge EXTRA_DIST
+  * install wallbox python script to right path
+
+  [ Ronmi Ren ]
+  * workaround for python-support
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Wed, 24 Mar 2010 21:51:36 +0800
+
 wallbox (0.4-0lucid2) lucid; urgency=low
 
   * fix module path for fitting python-support
