@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=@VERSION@
+Name=wallbox
+Comment=facebook notification for linux
+Exec=wallbox-applet
+Categories=Network;
+Icon=wallbox32
+Type=Application
+Terminal=false
+URL=
+StartupNotify=false
+
+
