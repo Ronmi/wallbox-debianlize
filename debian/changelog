@@ -1,3 +1,10 @@
+wallbox (0.4.2-1) unstable; urgency=low
+
+  [ Yuren Ju ]
+  * change type from int/long to str
+
+ -- Ronmi Ren <ronmi@rmi.twbbs.org>  Fri, 26 Mar 2010 17:37:07 +0800
+
 wallbox (0.4.1-1) unstable; urgency=low
 
   [ Yuren Ju ]
